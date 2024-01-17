@@ -1,4 +1,6 @@
 import { Inter } from 'next/font/google'
+import Head from 'next/head'
+import { ClerkProvider } from '@clerk/nextjs'
 import './globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -9,9 +11,20 @@ export const metadata = {
 }
 
 export default function RootLayout({ children }) {
+
+
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
-    </html>
-  )
+    <ClerkProvider>
+      <html lang="en">
+        <Head>
+          <link rel="preconnect" href="https://fonts.googleapis.com" />
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+              <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Croissant+One&family=Kanit:wght@500&family=Oswald:wght@200&family=Titillium+Web:wght@200&family=Victor+Mono:wght@100&family=Young+Serif&display=swap" rel="stylesheet" />
+              </Head>
+              <body>
+                <div>{children}</div>
+              </body>
+            </html>
+          </ClerkProvider>
+          )
 }

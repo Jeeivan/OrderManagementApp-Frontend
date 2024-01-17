@@ -1,113 +1,208 @@
-import Image from 'next/image'
+'use client'
+import Navbar from '../components/navbar/page';
+import { UserButton, useClerk } from "@clerk/nextjs";
+import { useEffect, useState } from 'react';
+import Footer from '../components/footer/page';
+import LoadingOverlay from '../components/loading/page';
+
 
 export default function Home() {
+  const [profile, setProfile] = useState({})
+  const { user } = useClerk();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (user) {
+      async function getProfile() {
+        try {
+          const response = await fetch(`http://localhost:4000/cProfile/${user?.id}`, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+          const result = await response.json();
+          if (result == 'Cannot find customerProfile') {
+            async function getBusinessProfile() {
+              try {
+                const response = await fetch(`http://localhost:4000/bProfile/${user?.id}`, {
+                  method: "GET",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                });
+                const result = await response.json();
+                if (result == 'Cannot find businessProfile') {
+                  window.location.href = "/business";
+                }
+                else {
+                  setProfile(result);
+                }
+              } catch (error) {
+                console.log("Profile not found", error);
+              }
+            }
+            getBusinessProfile()
+          }
+          else {
+            setProfile(result);
+          }
+        } catch (error) {
+          console.log("Profile not found", error);
+        }
+      }
+
+      getProfile();
+    }
+    const loadingTimeout = setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+
+    // Clean up the timeout to prevent memory leaks
+    return () => clearTimeout(loadingTimeout);
+  }, [user]);
+
+
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.js</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <div style={{ backgroundColor: 'black' }}>
+      {loading && <LoadingOverlay />}
+      <Navbar />
+      <main >
+        <div className='body-home'>
+          <div className="left-half">
+            {/* <!-- Content for the left half goes here --> */}
+
+          </div>
+          <div className="right-half">
+            {/* <!-- Content for the right half goes here --> */}
+            <h1 style={{ transform: 'scalex(-1)', fontSize: '8vh' }} class="mb-4 font-extrabold text-gray-900 dark:text-black"><span class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400"></span> The better way <br /> to find a builder</h1>
+            <p style={{ transform: 'scalex(-1)', width: '50vh' }} class="text-lg text-black lg:text-xl dark:text-gray-400">Trade+ makes it easy to find quality local businesses, reviewed by other homeowners, all across the UK.</p>
+            { !profile?.owner && !profile?.firstName && <div style={{ transform: 'scalex(-1)' }}><button className='home-left-button' onClick={() => window.location.href = "/services"} style={{ marginRight: '4vh' }}>Services</button><button className='home-right-button' onClick={() => window.location.href = "/login"} style={{ marginRight: '4vh' }}>Trade SignUp</button></div> }
+            { profile?.owner && <div style={{ transform: 'scalex(-1)' }}><button className='home-left-button' onClick={() => window.location.href = "/profile"} style={{ marginRight: '4vh' }}>Profile</button></div>}
+          </div>
         </div>
-      </div>
+        <div className='splitter'>
+          <p className='splitter-p'>Don't just take our word for it</p>
+          <div className='splitter-img'></div>
+        </div>
+        <div className='body-sections-header'>
+          <h2>Place orders with your favourite Tradesmen</h2>
+        </div>
+        <div className='body-sections'>
+          <div className="first-section">
+            <div className='first-image'></div>
+            <p className='p-section-header'>Search through are bussiness database</p>
+            <p className='p-section'>Begin your journey by exploring our comprehensive database of skilled tradesmen in your area. No need to post a job – simply scroll through a wide array of professionals offering various services. </p>
+          </div>
+          <div className="second-section">
+            <div className="second-image"></div>
+            <p className='p-section-header'>Reviews and Recommendations</p>
+            <p className='p-section'>Make informed decisions by delving into the experiences of previous customers. Each tradesman on our platform is accompanied by reviews and recommendations from individuals who have previously utilized their services. </p>
+          </div>
+          <div className="third-section">
+            <div className="third-image"></div>
+            <p className='p-section-header'>Connect with Your Preferred Tradesman</p>
+            <p className='p-section'>Once you've identified the tradesman that aligns with your preferences and project requirements, connect with them directly. Our platform provides convenient communication channels, allowing you to discuss your project, ask questions, and obtain quotes.</p>
+          </div>
+        </div>
+        <div className='builder-section-header-container'>
+          <h2 className='builder-section-header'>Builder for any job!</h2>
+        </div>
+          <div className='builder-section'>
+        <div className='builderSection'></div>
+          <div className='builderSection'>
+            <li className='bs'>Architectural Designers</li>
+            <li className='bs'>Bathroom Fitters</li>
+            <li className='bs'>Bricklayers</li>
+            <li className='bs'>Builders</li>
+            <li className='bs'>Carpenters & Joiners</li>
+            <li className='bs'>Carpet & Lino Fitters</li>
+            <li className='bs'>Chimney & Fireplace Specialists</li>
+          </div>
+          <div className='builderSection'>
+            <li className='bs'>Conservatory Installers</li>
+            <li className='bs'>Conversion Specialists</li>
+            <li className='bs'>Damp Proofing Specialists</li>
+            <li className='bs'>Decking Specialists</li>
+            <li className='bs'>Demolition Specialists</li>
+            <li className='bs'>Driveway Pavers</li>
+            <li className='bs'>Electricians</li>
+          </div>
+          <div className='builderSection'>
+            <li className='bs'>Extension Builders</li>
+            <li className='bs'>Fascias & Soffits Specialists</li>
+            <li className='bs'>Fencers</li>
+            <li className='bs'>Flooring Fitters</li>
+            <li className='bs'>Gardeners</li>
+            <li className='bs'>Gas Engineers</li>
+            <li className='bs'>Groundworkers</li>
+          </div>
+        <div className='builderSection'></div>
 
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800 hover:dark:bg-opacity-30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
+        </div>
+        <div className='search-section'>
+          <h2 className='search-section-header'>Pick your next home improvement today? <button onClick={() => window.location.href = "/services"}>View Services</button></h2>
+        </div>
+      </main>
+      {/* {profile?.firstName &&
+        <main style={{ height: '115vh' }}>
+          <section id="text-side">
+            <h1 style={{ color: 'white', fontSize: '20vh', marginTop: '-20vh' }}>Welcome</h1>
+            <p style={{ fontSize: '3vh' }}>
+              Trade+ gives you access to Thousands<br /> of companies at unbeatable prices
+            </p>
+            <button>Learn more</button>
+            <div className="clients-logos">
+              <img src="/company-logo-1-removebg-preview.png" />
+              <img src="/company-logo-2-removebg-preview.png" />
+              <img src="/company-logo-3-removebg-preview.png" />
+              <img src="/company-logo-4-removebg-preview.png" />
+            </div>
+          </section>
+          <section id="img-side">
+            <img
+              className="desktop-img"
+              src="https://i.postimg.cc/0Nt97Bhf/image-hero-desktop.png"
+            />
+            <img
+              className="mobile-img"
+              src="https://i.postimg.cc/ZnYfhwwW/image-hero-mobile.png"
+            />
+          </section>
+          <div className="footer">
+          </div>
+        </main>
+      } {profile?.owner &&
+        <main style={{ height: '115vh' }}>
+          <section id="text-side">
+            <h1 style={{ color: 'white', fontSize: '8vh', marginTop: '-5vh', fontFamily: 'Titillium Web' }}>Sell Sell Sell</h1>
+            <p style={{ fontSize: '3vh' }}>
+              Get ready to boost your business into overdrive
+            </p>
+            <button>Learn more</button>
+            <div className="clients-logos">
+              <img src="/company-logo-1-removebg-preview.png" />
+              <img src="/company-logo-2-removebg-preview.png" />
+              <img src="/company-logo-3-removebg-preview.png" />
+              <img src="/company-logo-4-removebg-preview.png" />
+            </div>
+          </section>
+          <section id="img-side">
+            <img
+              className="desktop-img"
+              src="https://i.postimg.cc/0Nt97Bhf/image-hero-desktop.png"
+            />
+            <img
+              className="mobile-img"
+              src="https://i.postimg.cc/ZnYfhwwW/image-hero-mobile.png"
+            />
+          </section>
+          <div className="footer">
+          </div>
+        </main>
+      } */}
+      <Footer />
+    </div>
+  );
 }
