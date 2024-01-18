@@ -10,9 +10,11 @@ export default function Home() {
   const [profile, setProfile] = useState({})
   const { user } = useClerk();
   const [loading, setLoading] = useState(true);
+  const business = localStorage.getItem('business')
 
   useEffect(() => {
     if (user) {
+      console.log(business);
       async function getProfile() {
         try {
           const response = await fetch(`http://localhost:4000/cProfile/${user?.id}`, {
@@ -23,6 +25,9 @@ export default function Home() {
           });
           const result = await response.json();
           if (result == 'Cannot find customerProfile') {
+            if (!business) {
+              window.location.href = "/complete-profile"
+            }else {
             async function getBusinessProfile() {
               try {
                 const response = await fetch(`http://localhost:4000/bProfile/${user?.id}`, {
@@ -33,10 +38,13 @@ export default function Home() {
                 });
                 const result = await response.json();
                 if (result == 'Cannot find businessProfile') {
-                  window.location.href = "/business";
+                  if (business) {
+                    window.location.href = "/complete-businessprofile";
+                  }
                 }
                 else {
                   setProfile(result);
+
                 }
               } catch (error) {
                 console.log("Profile not found", error);
@@ -44,6 +52,7 @@ export default function Home() {
             }
             getBusinessProfile()
           }
+        }
           else {
             setProfile(result);
           }
@@ -62,10 +71,8 @@ export default function Home() {
     return () => clearTimeout(loadingTimeout);
   }, [user]);
 
-
-
   return (
-    <div style={{ backgroundColor: 'black' }}>
+    <div>
       {loading && <LoadingOverlay />}
       <Navbar />
       <main >
@@ -78,8 +85,8 @@ export default function Home() {
             {/* <!-- Content for the right half goes here --> */}
             <h1 style={{ transform: 'scalex(-1)', fontSize: '8vh' }} class="mb-4 font-extrabold text-gray-900 dark:text-black"><span class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400"></span> The better way <br /> to find a builder</h1>
             <p style={{ transform: 'scalex(-1)', width: '50vh' }} class="text-lg text-black lg:text-xl dark:text-gray-400">Trade+ makes it easy to find quality local businesses, reviewed by other homeowners, all across the UK.</p>
-            { !profile?.owner && !profile?.firstName && <div style={{ transform: 'scalex(-1)' }}><button className='home-left-button' onClick={() => window.location.href = "/services"} style={{ marginRight: '4vh' }}>Services</button><button className='home-right-button' onClick={() => window.location.href = "/login"} style={{ marginRight: '4vh' }}>Trade SignUp</button></div> }
-            { profile?.owner && <div style={{ transform: 'scalex(-1)' }}><button className='home-left-button' onClick={() => window.location.href = "/profile"} style={{ marginRight: '4vh' }}>Profile</button></div>}
+            {!profile?.owner && !profile?.firstName && <div style={{ transform: 'scalex(-1)' }}><button className='home-left-button' onClick={() => window.location.href = "/services"} style={{ marginRight: '4vh' }}>Services</button><button className='home-right-button' onClick={() => window.location.href = "/login"} style={{ marginRight: '4vh' }}>Trade SignUp</button></div>}
+            {profile?.owner && <div style={{ transform: 'scalex(-1)' }}><button className='home-left-button' onClick={() => window.location.href = "/profile"} style={{ marginRight: '4vh' }}>Profile</button></div>}
           </div>
         </div>
         <div className='splitter'>
@@ -109,8 +116,8 @@ export default function Home() {
         <div className='builder-section-header-container'>
           <h2 className='builder-section-header'>Builder for any job!</h2>
         </div>
-          <div className='builder-section'>
-        <div className='builderSection'></div>
+        <div className='builder-section'>
+          <div className='builderSection'></div>
           <div className='builderSection'>
             <li className='bs'>Architectural Designers</li>
             <li className='bs'>Bathroom Fitters</li>
@@ -138,7 +145,7 @@ export default function Home() {
             <li className='bs'>Gas Engineers</li>
             <li className='bs'>Groundworkers</li>
           </div>
-        <div className='builderSection'></div>
+          <div className='builderSection'></div>
 
         </div>
         <div className='search-section'>

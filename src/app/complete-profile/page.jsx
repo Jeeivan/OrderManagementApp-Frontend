@@ -2,14 +2,13 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
 import { UserButton, useClerk } from "@clerk/nextjs";
-import { NextResponse } from 'next/server';
-import { clerkClient } from "@clerk/nextjs";
+import Navbar from '@/components/navbar/page';
+import Footer from '@/components/footer/page';
 
 
 function CompleteProfile() {
     const [userName, setUserName] = useState("");
     const [number, setNumber] = useState("");
-    // const [profilePic, setProfilePic] = useState("");
     const [address, setAddress] = useState("");
     const { user } = useClerk();
 
@@ -27,7 +26,6 @@ function CompleteProfile() {
                 body: JSON.stringify({
                     firstName: user.firstName,
                     lastName: user.lastName,
-                    // profilePic: profilePic,
                     phoneNum: number,
                     address: address,
                     email: user?.primaryEmailAddress.emailAddress,
@@ -38,7 +36,6 @@ function CompleteProfile() {
                 console.log("profile created");
                 window.location.href = "/";
             } else {
-                // Handle error cases
                 console.log("Failed to Create profile");
             }
         } catch (error) {
@@ -51,13 +48,9 @@ function CompleteProfile() {
         createProfile();
     };
 
-    // const handleFileChange = (e) => {
-    //     const file = e.target.files[0];
-    //     setProfilePic(file);
-    // };
-
     return (
-        <div className='home'>
+        <div>
+            <Navbar />
             <h1 style={{ textAlign: 'center', paddingTop: '5vh', fontFamily: 'Croissant One', fontSize: '10vh' }}>Complete Profile</h1>
             <div className="container">
                 <div className="form-container">
@@ -93,15 +86,6 @@ function CompleteProfile() {
                                     onChange={(e) => setNumber(e.target.value)}
                                 />
                             </label>
-                            {/* <br />
-                            <label>
-                                Profile Picture:
-                                <input
-                                    type="file"
-                                    accept="image/*"
-                                    onChange={handleFileChange}
-                                />
-                            </label> */}
                             <br />
                             <label>
                                 Address
@@ -117,6 +101,7 @@ function CompleteProfile() {
                     </div>
                 </div>
             </div>
+            <Footer />
         </div>
     )
 }

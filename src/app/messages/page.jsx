@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import { UserButton, useClerk } from "@clerk/nextjs";
 import EnquiriesCard from "../enquiries/enquiries-card/page";
 import EnquiriesCard2 from "../enquiries/enquiries-card-2/page";
+import Footer from "@/components/footer/page";
 
 function Messages() {
   const { user } = useClerk();
@@ -23,6 +24,7 @@ function Messages() {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   )
 }

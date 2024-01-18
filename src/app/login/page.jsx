@@ -2,7 +2,7 @@
 import React, { useEffect, useState} from 'react'
 import '../login/login.css'
 import Navbar from '../../components/navbar/page'
-import { UserButton, SignIn, SignUp, useClerk } from "@clerk/nextjs";
+import { UserButton, SignIn, SignUp, useClerk, SignOutButton } from "@clerk/nextjs";
 import LoadingOverlay from '../../components/loading/page'
 
 function Login() {

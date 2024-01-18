@@ -93,12 +93,12 @@ function Profile() {
                                     <dd class="text-lg font-semibold">{profile?.email}</dd>
                                 </div>
                                 <div class="flex flex-col py-1">
-                                    <dt class="text-gray-500 md:text-lg dark:text-gray-400">Home address</dt>
+                                    <dt class="text-gray-500 md:text-lg dark:text-gray-400">Address</dt>
                                     <dd class="text-lg font-semibold">{profile?.address}</dd>
                                 </div>
                                 <div class="flex flex-col pt-1">
                                     <dt class=" text-gray-500 md:text-sm dark:text-gray-400">Phone number</dt>
-                                    <dd class="text-lg font-semibold">+00 123 456 789 / +12 345 678</dd>
+                                    <dd class="text-lg font-semibold">{profile?.number ? profile?.number : 'N/A'}</dd>
                                 </div>
                                 <hr></hr>
                                 {profile?.rating === '0' &&
@@ -108,17 +108,17 @@ function Profile() {
                             </ul>
                         </div>
                     </div>
-                    {services &&
+            {/* <div style={{display: 'flex', flexDirection: 'column', alignItems: "center", justifyContent: "center"}}> */}
+            {services &&
                         <div className="profile-services">
                             <ServiceCard services={services} />
                         </div>
                     }
-                </div>
+                    <div style={{marginTop: '18vh',marginRight: '8vh', display: 'flex', alignItems: "center", justifyContent: "center"}}>
+            <ServiceModal user={user} />
             </div>
-            <div>
-                <ServiceModal user={user} />
             </div>
-
+            </div>
         </>
     )
 }

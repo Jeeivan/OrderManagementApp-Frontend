@@ -2,13 +2,12 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
 import { UserButton, useClerk } from "@clerk/nextjs";
-import { NextResponse } from 'next/server';
-import { clerkClient } from "@clerk/nextjs";
+import Navbar from '@/components/navbar/page';
+import Footer from '@/components/footer/page';
 
 
 function CompleteBusinessProfile() {
     const [name, setName] = useState("");
-    // const [profilePic, setProfilePic] = useState("");
     const [address, setAddress] = useState("");
     const [owner, setOwner] = useState("")
     const [description, setDescription] = useState("")
@@ -23,7 +22,6 @@ function CompleteBusinessProfile() {
                 },
                 body: JSON.stringify({
                     businessName: name,
-                    // profilePic: profilePic,
                     owner: owner,
                     address: address,
                     email: user?.primaryEmailAddress.emailAddress,
@@ -54,7 +52,8 @@ function CompleteBusinessProfile() {
     // };
 
     return (
-        <div className='home'>
+        <div>
+            <Navbar />
             <h1 style={{ textAlign: 'center', paddingTop: '5vh', fontFamily: 'Croissant One', fontSize: '10vh' }}>Complete Profile</h1>
             <div className="container">
                 <div className="form-container">
@@ -123,6 +122,7 @@ function CompleteBusinessProfile() {
                     </div>
                 </div>
             </div>
+            <Footer />
         </div>
     )
 }

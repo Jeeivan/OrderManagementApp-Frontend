@@ -22,6 +22,7 @@
 }
 
 body {
+  overflow-x: hidden;
   margin: 0;
   padding: 0;
   font-family: 'Kanit', sans-serif;
@@ -127,7 +128,6 @@ body {
 
 .right-half {
   transform: skew(10deg);
-  /* Adjust the skew angle as needed */
   width: 120vh;
   margin-left: 80vh;
   padding-right: 50vh;
@@ -150,7 +150,6 @@ body {
   width: 100%;
   height: 100%;
   transform: skew(20deg);
-  /* Adjust the skew angle to match the right-half skew */
   z-index: -1;
 }
 
@@ -159,7 +158,6 @@ body {
   height: 25vh;
   background-color: #ffffff;
   display: flex;
-  /* flex-direction: row; */
   align-items: center;
   justify-content: center;
   color: rgb(0, 0, 0);
@@ -176,12 +174,10 @@ body {
   height: 20vh;
   width: 40vh;
   background-color: #ffffff;
-  /* margin: 4vh 2vh 4vh 2vh; */
   background-size: contain;
   background-image: url('/1692562959174.jpeg');
   background-repeat: no-repeat;
   background-position: center center;
-  /* Center the background image */
 }
 
 .body-sections-header {
@@ -201,9 +197,7 @@ body {
   display: grid;
   background-color: rgb(223, 220, 220);
   grid-template-columns: 1fr 1fr 1fr;
-  /* Three columns of equal width */
   height: 80vh;
-  /* Make sure the grid takes up the full height of the viewport */
 }
 
 .p-section-header {
@@ -215,7 +209,6 @@ body {
   color: rgb(0, 0, 0);
   font-size: 3vh;
   line-height: 1.5;
-
   font-family: 'Kanit';
 }
 
@@ -481,55 +474,6 @@ main button {
     font-size: 1rem;
   }
 
-  body {
-    height: 100vh;
-    width: 100vw;
-    overflow-y: hidden;
-    overflow-x: hidden;
-  }
-
-  /* nav {
-    margin: 0 1.5rem 0 1.5rem;
-  } */
-
-  nav ul {
-    display: none;
-  }
-
-  .mobile-nav {
-    display: block;
-    margin-right: 2rem;
-  }
-
-  /* main {
-    display: grid;
-    grid-template-columns: 100%;
-    margin: -3rem auto 0 auto;
-  } */
-
-  /* Clients logos */
-  .clients-logos {
-    margin-top: 2rem;
-  }
-
-  .clients-logos img {
-    width: 30rem;
-  }
-
-  .clients-logos {
-    margin-top: 1rem;
-    display: flex;
-  }
-
-  .clients-logos img:nth-child(2) {
-    width: 7rem;
-  }
-
-  /* Images */
-  .desktop-img {
-    display: none;
-  }
-
   .mobile-img {
     display: block;
     margin-top: 3rem;
@@ -777,7 +721,7 @@ img {
 /* PROFILE */
 .profile-container {
   height: 100vh;
-  width: 180vh;
+  width: 200vh;
   background-color: #000000;
   background-image: url('/light-blue-background_GkNvxFHd_SB_PM.jpg');
   background-repeat: no-repeat;
@@ -797,8 +741,8 @@ img {
   outline: 0;
   grid-gap: 8px;
   align-items: center;
-  background-color: #ff90e8;
-  color: #000;
+  background-color: #000000;
+  color: #ffffff;
   /* border: 1px solid #000; */
   border-radius: 4px;
   cursor: pointer;
@@ -817,7 +761,7 @@ img {
 }
 
 .profile-delete-button:hover {
-  box-shadow: 4px 4px 0 #000;
+  box-shadow: 4px 4px 0 #000000;
   transform: translate(-4px, -4px);
 }
 
@@ -891,8 +835,8 @@ img {
 }
 
 .enquiries-container {
-  height: 100vh;
-  width: 180vh;
+  height: 120vh;
+  width: 200vh;
   background-color: rgb(243, 242, 242);
 }
 
