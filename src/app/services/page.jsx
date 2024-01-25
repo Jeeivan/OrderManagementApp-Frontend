@@ -120,7 +120,7 @@ function Services() {
             <Navbar />
             {!user &&
                 <div>
-                    <div id="popup-modal" tabindex="-1" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 w-full max-w-md max-h-full">
+                    <div id="popup-modal" tabindex="-1" className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 w-full max-w-md max-h-full">
                         <div className="relative p-4 w-full max-w-md max-h-full">
                             <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
                                 <button
@@ -212,13 +212,13 @@ function Services() {
                     <ServiceModal user={user} className='service-modal' />
                 </main>} */}
             <main className='services-main' style={{zIndex: '-1'}}>
-                <h1>All Services</h1>
+                <h1 style={{marginRight: '40vh'}}>All Services</h1>
                 <div classname='service-cards'>
                     {!clicked ?
                         allServices &&
-                        <CusServiceCard services={allServices} business={business} />
+                        <ServiceCard services={allServices} business={business} profile={profile} />
                         :
-                        <CusServiceCard services={filteredServices} business={business} />
+                        <ServiceCard services={filteredServices} business={business} profile={profile} />
                     }
                 </div>
             </main>

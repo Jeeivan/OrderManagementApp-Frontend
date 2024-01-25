@@ -72,11 +72,10 @@ function Profile() {
                 <div className="profile-container">
                     <div>
                     <div className="profile-header">
-                        <h1>{profile?.businessName}</h1>
+                        <h1 style={{marginRight: '20vh'}} >{profile?.businessName}</h1>
                     </div>
-                        <div className="profile-userButton"><UserButton afterSignOutUrl="/" /></div>
+                        <div style={{marginRight: '30vh'}} className="profile-userButton"><UserButton afterSignOutUrl="/" /></div>
                     </div>
-
                     <div className="profile-top">
                         <div className="profile-left">
                             <div className="profile-img"></div>
@@ -86,7 +85,7 @@ function Profile() {
                             </div>
                         </div>
                         <div className="profile-right">
-                            <h2 style={{ display: "flex", justifyContent: 'center' }}>Contact Info</h2>
+                            <h2 style={{ display: "flex", justifyContent: 'center', marginRight:'20vh' }}>Contact Info</h2>
                             <ul>
                                 <div class="flex flex-col pb-1">
                                     <dt class="mtext-gray-500 md:text-lg dark:text-gray-400">Email address</dt>
@@ -110,11 +109,11 @@ function Profile() {
                     </div>
             {/* <div style={{display: 'flex', flexDirection: 'column', alignItems: "center", justifyContent: "center"}}> */}
             {services &&
-                        <div className="profile-services">
+                        <div className="profile-services" style={{marginRight: '16vh'}}>
                             <ServiceCard services={services} />
                         </div>
                     }
-                    <div style={{marginTop: '18vh',marginRight: '8vh', display: 'flex', alignItems: "center", justifyContent: "center"}}>
+                    <div style={{marginTop: '18vh',marginRight: '25vh', display: 'flex', alignItems: "center", justifyContent: "center"}}>
             <ServiceModal user={user} />
             </div>
             </div>

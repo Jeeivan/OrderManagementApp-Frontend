@@ -680,6 +680,7 @@ img {
   display: flex;
   flex-direction: column;
   background-color: rgb(226, 223, 223);
+  max-height: 140vh;
 }
 
 .services-main {
@@ -687,6 +688,8 @@ img {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100vh;
+  margin-left: 80vh;
 }
 
 .services-title {
@@ -704,6 +707,13 @@ img {
 
 .service-card {
   margin: 1rem;
+}
+
+.service-card-all {
+  display: flex;
+  flex-direction: row-reverse;
+  flex-wrap: nowrap
+  ;
 }
 
 .service-modal {

@@ -87,6 +87,7 @@ export default function Home() {
             <p style={{ transform: 'scalex(-1)', width: '50vh' }} class="text-lg text-black lg:text-xl dark:text-gray-400">Trade+ makes it easy to find quality local businesses, reviewed by other homeowners, all across the UK.</p>
             {!profile?.owner && !profile?.firstName && <div style={{ transform: 'scalex(-1)' }}><button className='home-left-button' onClick={() => window.location.href = "/services"} style={{ marginRight: '4vh' }}>Services</button><button className='home-right-button' onClick={() => window.location.href = "/login"} style={{ marginRight: '4vh' }}>Trade SignUp</button></div>}
             {profile?.owner && <div style={{ transform: 'scalex(-1)' }}><button className='home-left-button' onClick={() => window.location.href = "/profile"} style={{ marginRight: '4vh' }}>Profile</button></div>}
+            {profile?.firstName && <div style={{ transform: 'scalex(-1)' }}><button className='home-left-button' onClick={() => window.location.href = "/services"} style={{ marginRight: '4vh' }}>Services</button></div>}
           </div>
         </div>
         <div className='splitter'>

@@ -1,13 +1,15 @@
 'use client'
 import React, { useState, useEffect} from 'react'
 import { UserButton, useClerk } from "@clerk/nextjs";
+import Navbar from '@/components/navbar/page';
+import Footer from '@/components/footer/page';
 
 
 function enquiriesFill() {
     const [message, setMessage] = useState('')
     const [profile, setProfile] = useState({})
     const [businessId, setBusinessId] = useState({})
-    const name = localStorage.getItem("name");
+    // const name = localStorage.getItem("name");
     const title = localStorage.getItem("title");
     const description = localStorage.getItem("description");
     const cost = localStorage.getItem("cost");
@@ -17,9 +19,9 @@ function enquiriesFill() {
     const { user } = useClerk();
 
     useEffect(() => {
-    if (!name) {
-        window.location.href = "/";
-    }
+    // if (!name) {
+    //     window.location.href = "/";
+    // }
     if (user) {
         async function getProfile() {
             try {
@@ -61,7 +63,6 @@ function enquiriesFill() {
             });
             if (response.ok) {
                 console.log("Enquiry sent");
-                localStorage.removeItem("name")
                 localStorage.removeItem("title")
                 localStorage.removeItem("description")
                 localStorage.removeItem("cost")
@@ -77,14 +78,15 @@ function enquiriesFill() {
     }
 
     return (
-        <div className='home'>
+        <div className='enquiries-home'>
+            <Navbar />
             {/* <h1 style={{ textAlign: 'center', paddingTop: '5vh', fontFamily: 'Croissant One', fontSize: '10vh' }}>Complete Profile</h1> */}
             <div className="container">
                 <div className="form-container">
                     <div className="form-content">
                         <h1 className="form-title">Send Enquiry</h1>
                         <form onSubmit={handleSubmit}>
-                            <br />
+                            {/* <br />
                             <label>
                                 Business
                                 <input
@@ -92,7 +94,7 @@ function enquiriesFill() {
                                     value={name}
                                     disabled
                                 />
-                            </label>
+                            </label> */}
                             <br />
                             <label>
                                 Title
@@ -144,6 +146,7 @@ function enquiriesFill() {
                     </div>
                 </div>
             </div>
+            <Footer />
         </div>
     )
 }
