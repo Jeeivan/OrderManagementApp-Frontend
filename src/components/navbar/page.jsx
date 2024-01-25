@@ -48,7 +48,7 @@ function Navbar() {
                     const result = await response.json();
                     if (result == 'Cannot find customerProfile') {
                         if (!business) {
-                            window.location.href = "/complete-profile"
+                            // window.location.href = "/complete-profile"
                         }
                             async function getBusinessProfile() {
                                 try {
@@ -61,7 +61,7 @@ function Navbar() {
                                     const result = await response.json();
                                     if (result == 'Cannot find businessProfile') {
                                         if (business) {
-                                            window.location.href = "/complete-businessprofile"
+                                            // window.location.href = "/complete-businessprofile"
                                         }
                                     }
                                     else {
