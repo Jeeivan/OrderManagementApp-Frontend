@@ -102,7 +102,7 @@ function ServiceCard({ services, name, refreshServices}) {
                         {profile?.owner ?
                             <div className='editDelete'>
                                 <ServiceDeleteModal serviceId={service._id} refreshServices={refreshServices}/>
-                                <ServiceEditModal serviceId={service._id} />
+                                <ServiceEditModal serviceId={service._id} refreshServices={refreshServices}/>
                             </div>
                         :
                         <button onClick={() => fillEnquiry(service, index)}>Enquire</button> }
