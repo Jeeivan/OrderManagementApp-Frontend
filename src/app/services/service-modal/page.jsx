@@ -47,7 +47,7 @@ const categories = [
     'Window & Door Fitters',
 ];
 
-const ServiceModal = ({ user }) => {
+const ServiceModal = ({ user, refreshServices }) => {
     const [modalVisible, setModalVisible] = useState(false);
     const [title, setTitle] = useState('');
     const [cost, setCost] = useState('');
@@ -83,6 +83,7 @@ const ServiceModal = ({ user }) => {
             if (response.ok) {
                 console.log('Successful');
                 toggleModal();
+                refreshServices()
             } else {
                 console.log('Failed to create service');
             }
