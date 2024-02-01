@@ -81,9 +81,9 @@ const ServiceModal = ({ user, refreshServices }) => {
                 }),
             });
             if (response.ok) {
+                refreshServices()
                 console.log('Successful');
                 toggleModal();
-                refreshServices()
             } else {
                 console.log('Failed to create service');
             }
