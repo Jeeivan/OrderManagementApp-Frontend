@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function ServiceDeleteModal({ serviceId }) {
+function ServiceDeleteModal({ serviceId, refreshServices }) {
     const [modalVisible, setModalVisible] = useState(false);
 
     const toggleModal = () => {
@@ -17,6 +17,7 @@ function ServiceDeleteModal({ serviceId }) {
                 },
             });
             toggleModal();
+            refreshServices()
         } catch (error) {
             console.log("Couldn't delete not found", error);
         }

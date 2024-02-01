@@ -10,7 +10,7 @@ function Profile() {
     const { user } = useClerk();
     const [loading, setLoading] = useState(true);
     const [profile, setProfile] = useState({})
-    const [services, setServices] = useState(false)
+    const [services, setServices] = useState([])
 
     useEffect(() => {
         if (user) {
@@ -49,6 +49,7 @@ function Profile() {
                             setServices(false)
                         } else {
                             setServices(result)
+                            console.log("successfully fetched services")
                         }
                     } catch (error) {
                         console.log("Service not found", error);
@@ -63,6 +64,26 @@ function Profile() {
 
         return () => clearTimeout(loadingTimeout);
     }, [user])
+
+    const refreshServices = async () => {
+        try {
+            const response = await fetch(`http://localhost:4000/services/${user?.id}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+            const result = await response.json();
+            if (result == 'Cannot find Services') {
+                setServices(false)
+            } else {
+                setServices(result)
+                console.log("successfully fetched services")
+            }
+        } catch (error) {
+            console.log("Service not found", error);
+        }
+    }
 
     return (
         <>
@@ -110,11 +131,11 @@ function Profile() {
             {/* <div style={{display: 'flex', flexDirection: 'column', alignItems: "center", justifyContent: "center"}}> */}
             {services &&
                         <div className="profile-services" style={{marginRight: '16vh'}}>
-                            <ServiceCard services={services} />
+                            <ServiceCard services={services} refreshServices={refreshServices}/>
                         </div>
                     }
                     <div style={{marginTop: '18vh',marginRight: '25vh', display: 'flex', alignItems: "center", justifyContent: "center"}}>
-            <ServiceModal user={user} />
+            <ServiceModal user={user} refreshServices={refreshServices}/>
             </div>
             </div>
             </div>

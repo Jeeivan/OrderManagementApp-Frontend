@@ -3,7 +3,7 @@ import React from 'react'
 import { useState } from 'react';
 import { ToggleButtonGroup } from 'react-bootstrap';
 
-function ServiceEditModal({ user, serviceId }) {
+function ServiceEditModal({ user, serviceId, refreshServices }) {
     const [modalVisible, setModalVisible] = useState(false);
     const [title, setTitle] = useState();
     const [cost, setCost] = useState();
@@ -29,6 +29,7 @@ function ServiceEditModal({ user, serviceId }) {
             if (response.ok) {
                 console.log("SUCCESFUL");}
                 toggleModal()
+                refreshServices()
             //     window.location.href = "/";
             // } else {
             //     // Handle error cases

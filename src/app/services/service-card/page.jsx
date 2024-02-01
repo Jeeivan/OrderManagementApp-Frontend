@@ -4,7 +4,7 @@ import ServiceDeleteModal from './service-delete-modal/page';
 import { UserButton, useClerk } from "@clerk/nextjs";
 import LoadingOverlay from '../../../components/loading/page';
 
-function ServiceCard({ services, name }) {
+function ServiceCard({ services, name, refreshServices}) {
     const { user } = useClerk();
     const [loading, setLoading] = useState(true);
     const [profile, setProfile] = useState({})
@@ -101,8 +101,8 @@ function ServiceCard({ services, name }) {
                         ))}
                         {profile?.owner ?
                             <div className='editDelete'>
-                                <ServiceDeleteModal serviceId={service._id} />
-                                <ServiceEditModal serviceId={service._id} />
+                                <ServiceDeleteModal serviceId={service._id} refreshServices={refreshServices}/>
+                                <ServiceEditModal serviceId={service._id} refreshServices={refreshServices}/>
                             </div>
                         :
                         <button onClick={() => fillEnquiry(service, index)}>Enquire</button> }
