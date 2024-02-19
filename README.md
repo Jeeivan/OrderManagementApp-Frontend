@@ -1,6 +1,6 @@
 ## Order Management App
 
-![screenshot of website](Screenshot 2024-02-19 at 20.26.49.png)
+![screenshot of website](example.png)
 
 ## Task Description
 
@@ -49,9 +49,10 @@ I made sure to carefully read through the file structure to see the different pa
 I am pleased with how I was able to pass my function as a prop to the corresponding files which gave me good practice of utilising the react framework in order to make sure I am not repeating my code.
 
 '''
-function ServiceDeleteModal({ serviceId, refreshServices }) {
-    const [modalVisible, setModalVisible] = useState(false);
 
+    function ServiceDeleteModal({ serviceId, refreshServices }) {
+    const [modalVisible, setModalVisible] = useState(false
+    
     const toggleModal = () => {
         setModalVisible(!modalVisible);
         console.log('modal toggled');
@@ -71,4 +72,24 @@ function ServiceDeleteModal({ serviceId, refreshServices }) {
             console.log("Couldn't delete not found", error);
         }
     };
-  '''
+    const toggleModal = () => {
+        setModalVisible(!modalVisible);
+        console.log('modal toggled');
+    };
+
+    const deleteService = async () => {
+        try {
+            await fetch(`http://localhost:4000/services/${serviceId}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+            toggleModal();
+            refreshServices()
+        } catch (error) {
+            console.log("Couldn't delete not found", error);
+        }
+    };
+
+'''
