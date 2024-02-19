@@ -48,8 +48,7 @@ I made sure to carefully read through the file structure to see the different pa
 
 I am pleased with how I was able to pass my function as a prop to the corresponding files which gave me good practice of utilising the react framework in order to make sure I am not repeating my code.
 
-'''
-
+```
     function ServiceDeleteModal({ serviceId, refreshServices }) {
     const [modalVisible, setModalVisible] = useState(false
     
@@ -92,4 +91,4 @@ I am pleased with how I was able to pass my function as a prop to the correspond
         }
     };
 
-'''
+```
